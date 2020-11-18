@@ -1,15 +1,33 @@
 # Skeleton 骨架屏
-基于 taro 的一个简单易用的骨架屏组件
+基于 Taro 的一个简单易用的骨架屏组件
 
+> **2.0**版本以上支持 **Taro3.0**
 ### 支持多端平台使用 
 1. 微信小程序
 2. h5
-3. 其它平台未测试
+3. 百度小程序
+4. 头条小程序
+5. 支付宝小程序
+6. 其它平台未测试
 
-### 引入
+### 快速上手
+#### 引入组件
 
 ``` javascript
 import Skeleton from 'taro-skeleton'
+```
+#### 引入组件样式的方式
+* 全局引入（JS中）
+``` js
+import 'taro-skeleton/dist/index.css' // 引入组件样式
+```
+
+### 配置需要额外编译的源码模块
+由于引用 `node_modules` 的模块，默认不会编译，所以需要额外给 H5 配置 `esnextModules`，在 taro 项目的 `config/index.js` 中新增如下配置项：
+``` js
+h5: {
+  esnextModules: ['taro-skeleton']
+}
 ```
 
 ## 代码演示
@@ -18,7 +36,7 @@ import Skeleton from 'taro-skeleton'
 
 通过`title`属性显示标题占位图，通过`row`属性配置占位段落行数
 
-``` jsx
+``` html
 <Skeleton title row={3} />
 ```
 
@@ -26,19 +44,38 @@ import Skeleton from 'taro-skeleton'
 
 通过`avatar`属性显示头像占位图
 
-``` jsx
+``` html
 <Skeleton title avatar row={3} />
 ```
 ### 不同排列方式
 通过`type`属性来控制排列方式，默认值为 `row`，可选`column`
-``` jsx
+``` html
 <Skeleton type='column' title titleWidth={'80%'} avatar />
 ```
+### 自定义样式
+通过添加自定义`className`类名进行覆盖即可`
+``` scss
+// index.scss
+.custom-class { 
+  .skeleton-avatar, .skeleton-row, .skeleton-title {
+    background-color: red;
+  }
+}
+```
+``` jsx
+// index.jsx
+<Skeleton className='custom-class' row={1} rowProps={[{
+  width: '50%',
+  height: '50px'
+}]} avatar
+></Skeleton>
+```
+
 ### 展示子组件
 
 将`loading`属性设置成`false`表示内容加载完成，此时会隐藏占位图，并显示`Skeleton`的子组件
 
-``` jsx
+``` html
 <Skeleton
   title
   avatar
@@ -89,7 +126,8 @@ export default class Index extends Component {
 | loading | 是否显示占位图，传`false`时会展示子组件内容 | `boolean` | `true` | - 
 | animate | 是否开启动画 | `boolean` | `true` | - |
 | animateName | 动画类型，可选值为`elastic` | `string` | `blink` | 1.3.9 |
-
+| contentAlignStyle | 内部内容对齐方式，可选值为 | `left/center/right` | `center` | 1.4.0
+| designWidth |Taro.pxTransform(px, designWidth) 的designWidth的属性| `number` | `750` | 2.0.0 |
 ### RowProps
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
